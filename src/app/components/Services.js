@@ -106,7 +106,7 @@ export default function Services() {
 
                 {/* Hologram Glow */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-[#00A8FF]/10 to-[#005DFF]/10 opacity-0 
+                  className="absolute inset-0 bg-linear-to-br from-[#00A8FF]/10 to-[#005DFF]/10 opacity-0 
                   group-hover:opacity-100 rounded-2xl transition-opacity duration-500"
                 />
 
@@ -118,7 +118,7 @@ export default function Services() {
                     transition={{ type: "spring", stiffness: 150, damping: 10 }}
                     className="
                       w-20 h-20 mx-auto mb-6 rounded-2xl 
-                      bg-gradient-to-tr from-[#00A8FF] to-[#005DFF] 
+                      bg-linear-to-tr from-[#00A8FF] to-[#005DFF] 
                       flex items-center justify-center
                       shadow-[0_0_18px_#00A8FF80]
                     "

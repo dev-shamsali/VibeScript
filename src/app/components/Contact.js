@@ -59,7 +59,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-24 relative overflow-hidden bg-gradient-to-b from-[#040B16] to-[#020617]"
+      className="py-24 relative overflow-hidden bg-linear-to-b from-[#040B16] to-[#020617]"
     >
       {/* Floating Blue Flame Glows */}
       <div className="absolute inset-0 pointer-events-none">
@@ -86,7 +86,7 @@ export default function Contact() {
           className="text-4xl md:text-5xl font-bold text-center mb-16"
         >
           Get In{" "}
-          <span className="bg-gradient-to-r from-[#00A8FF] via-[#24C9FF] to-[#005DFF] bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-[#00A8FF] via-[#24C9FF] to-[#005DFF] bg-clip-text text-transparent">
             Touch
           </span>
         </motion.h2>
@@ -191,7 +191,7 @@ export default function Contact() {
               whileTap={{ scale: 0.96 }}
               type="submit"
               disabled={loading}
-              className="w-full px-8 py-4 bg-gradient-to-r from-[#00A8FF] to-[#005DFF] rounded-lg font-semibold text-white
+              className="w-full px-8 py-4 bg-linear-to-r from-[#00A8FF] to-[#005DFF] rounded-lg font-semibold text-white
               hover:shadow-[0_0_20px_#009DFF80] transition-all duration-300 flex items-center justify-center gap-2
               disabled:opacity-50 disabled:cursor-not-allowed"
             >

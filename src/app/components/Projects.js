@@ -42,7 +42,7 @@ export default function Projects() {
   ]
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden bg-gradient-to-b from-[#020617]/80 to-[#040B16]/90">
+    <section id="projects" className="py-24 relative overflow-hidden bg-linear-to-b from-[#020617]/80 to-[#040B16]/90">
 
       {/* Floating Blue Flame Orbs */}
       <div className="absolute inset-0 pointer-events-none">
@@ -69,7 +69,7 @@ export default function Projects() {
           className="text-4xl md:text-5xl font-bold text-center mb-16"
         >
           Our{" "}
-          <span className="bg-gradient-to-r from-[#00A8FF] via-[#24C9FF] to-[#005DFF] bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-[#00A8FF] via-[#24C9FF] to-[#005DFF] bg-clip-text text-transparent">
             Projects
           </span>
         </motion.h2>
@@ -95,7 +95,7 @@ export default function Projects() {
 
               {/* Glow Overlay */}
               <motion.div
-                className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-10 group-hover:opacity-20 transition-opacity`}
+                className={`absolute inset-0 bg-linear-to-br ${project.gradient} opacity-10 group-hover:opacity-20 transition-opacity`}
               />
 
               {/* Content */}
@@ -112,7 +112,7 @@ export default function Projects() {
                   {project.points.map((point, i) => (
                     <span
                       key={i}
-                      className={`px-3 py-1 rounded-full text-sm text-white bg-gradient-to-r ${project.gradient}`}
+                      className={`px-3 py-1 rounded-full text-sm text-white bg-linear-to-r ${project.gradient}`}
                     >
                       {point}
                     </span>

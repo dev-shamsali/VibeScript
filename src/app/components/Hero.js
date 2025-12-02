@@ -19,7 +19,7 @@ export default function Hero() {
     >
       {/* Background */}
       <motion.div 
-        className="absolute inset-0 bg-gradient-to-br from-[#020617] via-[#020b24] to-[#050816] pointer-events-none"
+        className="absolute inset-0 bg-linear-to-br from-[#020617] via-[#020b24] to-[#050816] pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2 }}
@@ -67,7 +67,7 @@ export default function Hero() {
                 }
               }}
             >
-              <span className="bg-gradient-to-r from-[#00A8FF] via-[#24C9FF] to-[#005DFF] bg-clip-text text-transparent">
+              <span className="bg-linear-to-r from-[#00A8FF] via-[#24C9FF] to-[#005DFF] bg-clip-text text-transparent">
                 Igniting Digital
               </span>
               <br />
@@ -96,7 +96,7 @@ export default function Hero() {
                 whileHover={{ scale: 1.07 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection('projects')}
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[#00A8FF] to-[#005DFF] font-semibold text-sm sm:text-base shadow-lg shadow-blue-700/40 hover:shadow-blue-500/60 transition-transform"
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-linear-to-r from-[#00A8FF] to-[#005DFF] font-semibold text-sm sm:text-base shadow-lg shadow-blue-700/40 hover:shadow-blue-500/60 transition-transform"
               >
                 View Our Work
                 <ArrowRight className="w-5 h-5" />
@@ -120,7 +120,7 @@ export default function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            <div className="absolute -inset-1 bg-gradient-to-tr from-[#00A8FF]/20 via-transparent to-[#005DFF]/40 blur-2xl opacity-70" />
+            <div className="absolute -inset-1 bg-linear-to-tr from-[#00A8FF]/20 via-transparent to-[#005DFF]/40 blur-2xl opacity-70" />
 
             <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-7 lg:p-8 shadow-[0_20px_60px_rgba(15,23,42,0.9)]">
               
@@ -129,7 +129,7 @@ export default function Hero() {
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Studio Status</p>
                   <p className="text-lg font-semibold text-sky-100">Accepting Projects</p>
                 </div>
-                <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-[#00A8FF] to-[#005DFF] flex items-center justify-center shadow-lg shadow-blue-700/50">
+                <div className="h-10 w-10 rounded-full bg-linear-to-tr from-[#00A8FF] to-[#005DFF] flex items-center justify-center shadow-lg shadow-blue-700/50">
                   <Rocket className="w-5 h-5 text-white" />
                 </div>
               </div>
@@ -166,3 +166,4 @@ export default function Hero() {
     </section>
   )
 }
+
