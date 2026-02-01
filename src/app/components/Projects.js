@@ -5,149 +5,121 @@ import { motion } from 'framer-motion'
 
 export default function Projects() {
   const fadeUp = {
-    hidden: { opacity: 0, y: 60 },
+    hidden: { opacity: 0, y: 50 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
+      transition: { duration: 0.7, ease: 'easeOut' },
     },
   }
 
   const stagger = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.18 } },
+    show: { transition: { staggerChildren: 0.15 } },
   }
 
   const projects = [
     {
-      title: 'Shams Portfolio',
-      desc: 'A high-performance personal portfolio showcasing projects, skills, and experience with a clean modern UI.',
-      gradient: 'from-emerald-400 to-green-600',
+      title: 'Developer Portfolio',
+      tag: 'Portfolio',
+      desc: 'A high-performance personal portfolio showcasing projects, skills, and experience.',
+      url: 'https://shamsali.vercel.app/',
     },
     {
-      title: 'Flex Fix Gym',
-      desc: 'A dynamic gym website built to increase memberships with clear CTAs, class schedules, and modern branding.',
-      gradient: 'from-green-400 to-emerald-600',
+      title: 'Flex Fire Gym',
+      tag: 'Business Website',
+      desc: 'A conversion-focused gym website with strong CTAs, schedules, and modern branding.',
+      url: 'https://flex-fire-gym.vercel.app/',
     },
     {
       title: 'Arna Skin Care',
-      desc: 'A premium skincare brand website focused on product storytelling, conversions, and a seamless shopping experience.',
-      gradient: 'from-emerald-300 to-green-500',
-      center: true,
+      tag: 'E-Commerce',
+      desc: 'A premium skincare brand website focused on storytelling and product conversion.',
+      url: 'https://arnaskincare.in/',
+    },
+    {
+      title: 'Bulk Message Transfer SaaS',
+      tag: 'SaaS Platform',
+      desc: 'A WhatsApp bulk message transfer SaaS built for automation, speed, and scale.',
+      url: 'https://bulk-transfer-wapp.vercel.app/',
     },
   ]
 
   return (
-    <section id="projects" className="relative py-32 overflow-hidden">
-      {/* Ambient Glows */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute -top-24 left-12 w-96 h-96 bg-emerald-500/20 blur-[160px] rounded-full"
-          animate={{ y: [0, -30, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-10 w-[28rem] h-[28rem] bg-green-400/20 blur-[180px] rounded-full"
-          animate={{ y: [0, 35, 0] }}
-          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-        {/* Header */}
+    <section id="projects" className="relative py-28 overflow-hidden">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
         <motion.h2
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-120px' }}
+          viewport={{ once: true }}
           className="text-4xl md:text-5xl font-extrabold text-center mb-20"
         >
-          Our{' '}
-          <span className="gradient-text">
-            Projects
-          </span>
+          Our <span className="gradient-text">Projects</span>
         </motion.h2>
 
-        {/* Projects Grid */}
+        {/* Grid */}
         <motion.div
-          className="grid md:grid-cols-2 gap-12 place-items-center"
           variants={stagger}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-120px' }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-10"
         >
           {projects.map((project, idx) => (
             <motion.div
               key={idx}
               variants={fadeUp}
-              whileHover={{ y: -10 }}
-              transition={{ type: 'spring', stiffness: 120, damping: 14 }}
-              className={`
-                group relative w-full
-                rounded-3xl p-[1px]
-                ${project.center ? 'md:col-span-2 max-w-xl' : ''}
-              `}
+              whileHover={{ y: -8 }}
+              className="
+                relative h-full rounded-3xl
+                bg-white/5 backdrop-blur-xl
+                border border-white/10
+                p-8
+                transition-all duration-500
+                hover:border-emerald-400/40
+                hover:shadow-[0_0_45px_rgba(16,185,129,0.25)]
+              "
             >
-              {/* Gradient Border */}
-              <div
-                className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${project.gradient} opacity-30`}
-              />
+              {/* Tag */}
+              <span className="
+                inline-block mb-4 px-4 py-1 rounded-full
+                text-xs font-semibold
+                bg-emerald-500/15 text-emerald-300
+              ">
+                {project.tag}
+              </span>
 
-              {/* Glass Card */}
-              <div
+              {/* Title */}
+              <h3 className="text-2xl font-semibold text-white mb-3">
+                {project.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-slate-300 leading-relaxed mb-8">
+                {project.desc}
+              </p>
+
+              {/* CTA */}
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="
-                  relative rounded-3xl p-8 h-full
-                  bg-white/5 backdrop-blur-xl
-                  border border-white/10
-                  transition-all duration-500
-                  group-hover:border-emerald-400/50
-                  group-hover:shadow-[0_0_50px_rgba(16,185,129,0.25)]
+                  inline-flex items-center gap-2
+                  px-6 py-3 rounded-full
+                  bg-emerald-600/90 hover:bg-emerald-600
+                  text-white font-medium
+                  transition-all
                 "
               >
-                <h3 className="text-2xl font-semibold mb-4 text-white">
-                  {project.title}
-                </h3>
-
-                <p className="text-slate-300 mb-6 leading-relaxed">
-                  {project.desc}
-                </p>
-
-                <p className="text-sm text-emerald-300 mb-7 font-medium">
-                  Built by the VibeScript Team
-                </p>
-
-                <motion.button
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="
-                    inline-flex items-center gap-2
-                    px-6 py-2 rounded-full
-                    bg-white/10 hover:bg-emerald-600
-                    transition-all text-white
-                  "
-                >
-                  View Project
-                  <ArrowRight className="w-4 h-4" />
-                </motion.button>
-              </div>
+                View Project
+                <ArrowRight className="w-4 h-4" />
+              </a>
             </motion.div>
           ))}
         </motion.div>
-
-        {/* View More */}
-        <div className="flex justify-center mt-20">
-          <button
-            className="
-              px-10 py-4 rounded-full
-              bg-white/10 hover:bg-emerald-600
-              text-white flex items-center gap-2
-              transition-all text-lg font-semibold
-            "
-          >
-            View More Projects
-            <ArrowRight className="w-5 h-5" />
-          </button>
-        </div>
       </div>
     </section>
   )
