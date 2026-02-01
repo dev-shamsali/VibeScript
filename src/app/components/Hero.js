@@ -4,16 +4,141 @@ import { useEffect, useRef } from 'react'
 import { ArrowRight, Sparkles, Code2, ShieldCheck, Rocket } from 'lucide-react'
 import gsap from 'gsap'
 
+/* --------------------------------
+   PARTICLE BACKGROUND (DENSE + CLEAN)
+--------------------------------- */
+function HeroParticles() {
+  const canvasRef = useRef(null)
+  const mouse = useRef({ x: -9999, y: -9999 })
+  const ctaRects = useRef([])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+
+    let w, h
+    const resize = () => {
+      w = canvas.width = window.innerWidth
+      h = canvas.height = window.innerHeight
+      ctaRects.current = Array.from(
+        document.querySelectorAll('.hero-cta button')
+      ).map((el) => el.getBoundingClientRect())
+    }
+
+    resize()
+    window.addEventListener('resize', resize)
+
+    const PARTICLE_COUNT = 220
+    const CURSOR_RADIUS = 110
+    const CTA_RADIUS = 180
+
+    const particles = Array.from({ length: PARTICLE_COUNT }).map(() => {
+      const x = Math.random() * w
+      const y = Math.random() * h
+      return {
+        x,
+        y,
+        ox: x,
+        oy: y,
+        vx: 0,
+        vy: 0,
+        r: Math.random() * 1.4 + 0.5,
+        a: Math.random() * 0.35 + 0.15,
+      }
+    })
+
+    const onMove = (e) => {
+      mouse.current.x = e.clientX
+      mouse.current.y = e.clientY
+    }
+
+    const onLeave = () => {
+      mouse.current.x = -9999
+      mouse.current.y = -9999
+    }
+
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseleave', onLeave)
+
+    const animate = () => {
+      ctx.clearRect(0, 0, w, h)
+
+      for (const p of particles) {
+        let fx = 0
+        let fy = 0
+
+        // Cursor repulsion
+        const dx = p.x - mouse.current.x
+        const dy = p.y - mouse.current.y
+        const dist = Math.hypot(dx, dy)
+
+        if (dist < CURSOR_RADIUS) {
+          const force = (CURSOR_RADIUS - dist) / CURSOR_RADIUS
+          const angle = Math.atan2(dy, dx)
+          fx += Math.cos(angle) * force * 0.12
+          fy += Math.sin(angle) * force * 0.12
+        }
+
+        // CTA repulsion (stronger)
+        for (const rect of ctaRects.current) {
+          const cx = rect.left + rect.width / 2
+          const cy = rect.top + rect.height / 2
+          const dx2 = p.x - cx
+          const dy2 = p.y - cy
+          const d2 = Math.hypot(dx2, dy2)
+
+          if (d2 < CTA_RADIUS) {
+            const force2 = (CTA_RADIUS - d2) / CTA_RADIUS
+            const angle2 = Math.atan2(dy2, dx2)
+            fx += Math.cos(angle2) * force2 * 0.22
+            fy += Math.sin(angle2) * force2 * 0.22
+          }
+        }
+
+        // Spring back
+        p.vx += (p.ox - p.x) * 0.002
+        p.vy += (p.oy - p.y) * 0.002
+
+        p.vx += fx
+        p.vy += fy
+
+        p.vx *= 0.92
+        p.vy *= 0.92
+
+        p.x += p.vx
+        p.y += p.vy
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(148,163,184,${p.a})` // slate dots (no green glow)
+        ctx.fill()
+      }
+
+      requestAnimationFrame(animate)
+    }
+
+    animate()
+
+    return () => {
+      window.removeEventListener('resize', resize)
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseleave', onLeave)
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none absolute inset-0 z-0"
+    />
+  )
+}
+
 export default function Hero() {
   const sectionRef = useRef(null)
-  const glowLeft = useRef(null)
-  const glowRight = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      /* --------------------------------
-         HERO INTRO (CINEMATIC)
-      --------------------------------- */
       const tl = gsap.timeline({ delay: 0.25 })
 
       tl.from('.hero-title-line', {
@@ -23,55 +148,24 @@ export default function Hero() {
         ease: 'power4.out',
         duration: 1.2,
       })
-        .from(
-          '.hero-subtitle',
-          {
-            y: 60,
-            opacity: 0,
-            duration: 1,
-            ease: 'power3.out',
-          },
-          '-=0.5'
-        )
-        .from(
-          '.hero-cta',
-          {
-            scale: 0.9,
-            opacity: 0,
-            ease: 'back.out(1.6)',
-            duration: 0.9,
-          },
-          '-=0.4'
-        )
-        .from(
-          '.hero-panel',
-          {
-            x: 120,
-            opacity: 0,
-            duration: 1.3,
-            ease: 'power4.out',
-          },
-          '-=0.6'
-        )
-
-      /* --------------------------------
-         FLOATING GLOWS
-      --------------------------------- */
-      gsap.to(glowLeft.current, {
-        y: 70,
-        repeat: -1,
-        yoyo: true,
-        duration: 8,
-        ease: 'sine.inOut',
-      })
-
-      gsap.to(glowRight.current, {
-        y: -80,
-        repeat: -1,
-        yoyo: true,
-        duration: 9,
-        ease: 'sine.inOut',
-      })
+        .from('.hero-subtitle', {
+          y: 60,
+          opacity: 0,
+          duration: 1,
+          ease: 'power3.out',
+        }, '-=0.5')
+        .from('.hero-cta', {
+          scale: 0.9,
+          opacity: 0,
+          ease: 'back.out(1.6)',
+          duration: 0.9,
+        }, '-=0.4')
+        .from('.hero-panel', {
+          x: 120,
+          opacity: 0,
+          duration: 1.3,
+          ease: 'power4.out',
+        }, '-=0.6')
     }, sectionRef)
 
     return () => ctx.revert()
@@ -85,32 +179,9 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="home"
-      className="
-        relative min-h-screen flex items-center pt-28 overflow-hidden
-        bg-transparent
-      "
+      className="relative min-h-screen flex items-center pt-28 overflow-hidden"
     >
-      {/* Ambient Glows (DO NOT block background) */}
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          ref={glowLeft}
-          className="
-            absolute -top-32 -left-24
-            w-96 h-96 rounded-full
-            bg-emerald-500/20
-            blur-[160px]
-          "
-        />
-        <div
-          ref={glowRight}
-          className="
-            absolute bottom-0 -right-32
-            w-[32rem] h-[32rem] rounded-full
-            bg-green-400/15
-            blur-[180px]
-          "
-        />
-      </div>
+      <HeroParticles />
 
       {/* CONTENT */}
       <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
@@ -135,14 +206,10 @@ export default function Hero() {
             <div className="hero-cta flex flex-wrap gap-5 pt-2">
               <button
                 onClick={() => scrollToSection('projects')}
-                className="
-                  inline-flex items-center gap-2 px-9 py-4 rounded-full
-                  bg-gradient-to-r from-emerald-500 to-green-600
-                  font-semibold text-sm sm:text-base text-white
-                  shadow-2xl shadow-emerald-600/40
-                  hover:shadow-emerald-500/70
-                  transition-all hover:scale-105 active:scale-95
-                "
+                className="inline-flex items-center gap-2 px-9 py-4 rounded-full
+                bg-gradient-to-r from-emerald-500 to-green-600
+                font-semibold text-white shadow-xl
+                hover:scale-105 transition-all"
               >
                 View Our Work
                 <ArrowRight className="w-5 h-5" />
@@ -150,40 +217,18 @@ export default function Hero() {
 
               <button
                 onClick={() => scrollToSection('contact')}
-                className="
-                  inline-flex items-center gap-2 px-9 py-4 rounded-full
-                  border border-emerald-500/40
-                  bg-white/5 backdrop-blur-md
-                  text-sm sm:text-base text-emerald-100
-                  hover:bg-white/10 hover:border-emerald-400
-                  transition-all
-                "
+                className="inline-flex items-center gap-2 px-9 py-4 rounded-full
+                border border-emerald-500/40 bg-white/5 backdrop-blur-md
+                text-emerald-100 hover:bg-white/10 transition-all"
               >
                 Let&apos;s Collaborate
               </button>
             </div>
           </div>
 
-          {/* RIGHT PANEL (GLASS ONLY — NO SOLID BG) */}
+          {/* RIGHT PANEL */}
           <div className="hero-panel relative mb-16">
-            <div
-              className="
-                absolute -inset-1
-                bg-gradient-to-tr from-emerald-400/25 via-transparent to-green-600/40
-                blur-2xl opacity-70
-              "
-            />
-
-            <div
-              className="
-                relative rounded-3xl
-                border border-white/10
-                bg-white/5
-                backdrop-blur-xl
-                p-7
-                shadow-[0_30px_80px_rgba(0,0,0,0.75)]
-              "
-            >
+            <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-7 shadow-[0_30px_80px_rgba(0,0,0,0.75)]">
               <div className="flex items-center justify-between mb-7">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-slate-400">
@@ -193,7 +238,7 @@ export default function Hero() {
                     Accepting Projects
                   </p>
                 </div>
-                <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-emerald-500 to-green-600 flex items-center justify-center shadow-lg shadow-emerald-600/50">
+                <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-emerald-500 to-green-600 flex items-center justify-center">
                   <Rocket className="w-6 h-6 text-white" />
                 </div>
               </div>
@@ -204,11 +249,9 @@ export default function Hero() {
                 <InfoCard icon={<Sparkles />} title="Style" value="Clean UI/UX" />
               </div>
 
-              <div className="border-t border-white/10 pt-4 flex justify-between text-xs sm:text-sm text-slate-300">
+              <div className="border-t border-white/10 pt-4 flex justify-between text-xs text-slate-300">
                 <p>Engineering growth-driven digital products.</p>
-                <p className="text-emerald-300 font-medium">
-                  VibeScript · 2025
-                </p>
+                <p className="text-emerald-300 font-medium">VibeScript · 2025</p>
               </div>
             </div>
           </div>
@@ -219,19 +262,10 @@ export default function Hero() {
   )
 }
 
-/* --------------------------------
-   INFO CARD (GLASS)
---------------------------------- */
 function InfoCard({ icon, title, value }) {
   return (
-    <div className="
-      rounded-2xl
-      bg-white/5
-      backdrop-blur-md
-      border border-emerald-500/20
-      p-4 space-y-2
-    ">
-      <div className="text-emerald-300 ">{icon}</div>
+    <div className="rounded-2xl bg-white/5 backdrop-blur-md border border-emerald-500/20 p-4 space-y-2">
+      <div className="text-emerald-300">{icon}</div>
       <p className="text-xs text-slate-400">{title}</p>
       <p className="text-sm font-medium text-slate-100">{value}</p>
     </div>
