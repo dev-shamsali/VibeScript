@@ -10,38 +10,25 @@ export default function Contact() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: 'easeOut' },
+      transition: { duration: 0.6, ease: 'easeOut' },
     },
   }
 
   const stagger = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.15 } },
+    show: { transition: { staggerChildren: 0.12 } },
   }
 
   return (
-    <section id="contact" className="py-28 relative overflow-hidden">
-      {/* Ambient Glows */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute top-24 left-10 w-80 h-80 bg-emerald-500/20 blur-3xl rounded-full"
-          animate={{ y: [0, -25, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute bottom-10 right-10 w-96 h-96 bg-green-400/20 blur-3xl rounded-full"
-          animate={{ y: [0, 30, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </div>
+    <section id="contact" className="relative py-28">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         {/* Heading */}
         <motion.h2
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-120px' }}
+          viewport={{ once: true }}
           className="text-4xl md:text-5xl font-extrabold text-center mb-20"
         >
           Get In <span className="gradient-text">Touch</span>
@@ -52,80 +39,83 @@ export default function Contact() {
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-120px' }}
+          viewport={{ once: true }}
           className="
-            max-w-3xl mx-auto
-            bg-slate-900/60 border border-emerald-500/20
+            max-w-4xl mx-auto
             rounded-3xl p-10 md:p-14
-            backdrop-blur-xl
-            shadow-[0_0_45px_rgba(16,185,129,0.25)]
+            bg-white/5 backdrop-blur-xl
+            border border-white/10
+            transition-all duration-500
+            hover:border-emerald-400/40
+            hover:shadow-[0_0_45px_rgba(16,185,129,0.25)]
           "
         >
-          {/* Info */}
+          {/* Contact Info */}
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            className="grid sm:grid-cols-3 gap-8 text-center mb-14"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-10 text-center mb-14"
           >
-            {/* EMAIL */}
+            {/* Email */}
             <motion.a
               variants={fadeUp}
               href="mailto:info.vibescript@gmail.com"
-              className="group block"
+              className="group"
             >
-              <Mail className="w-8 h-8 mx-auto mb-3 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <Mail className="w-7 h-7 mx-auto mb-3 text-emerald-400 group-hover:scale-110 transition-transform" />
               <p className="text-slate-300 group-hover:text-emerald-300 transition-colors">
                 info.vibescript@gmail.com
               </p>
             </motion.a>
 
-            {/* PHONE */}
+            {/* Phone */}
             <motion.a
               variants={fadeUp}
               href="tel:+919226539203"
-              className="group block"
+              className="group"
             >
-              <PhoneCall className="w-8 h-8 mx-auto mb-3 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <PhoneCall className="w-7 h-7 mx-auto mb-3 text-emerald-400 group-hover:scale-110 transition-transform" />
               <p className="text-slate-300 group-hover:text-emerald-300 transition-colors">
                 +91 92265 39203
               </p>
             </motion.a>
 
-            {/* LOCATION */}
+            {/* Location */}
             <motion.div variants={fadeUp}>
-              <MapPin className="w-8 h-8 mx-auto mb-3 text-emerald-400" />
+              <MapPin className="w-7 h-7 mx-auto mb-3 text-emerald-400" />
               <p className="text-slate-300">Mumbai · Remote</p>
             </motion.div>
           </motion.div>
 
-          {/* Social Icons */}
+          {/* Socials */}
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
+            viewport={{ once: true }}
             className="flex justify-center gap-6"
           >
             {/* Instagram */}
             <motion.a
               variants={fadeUp}
-              href="https://www.instagram.com/vibescript.tech?igsh=MXkybDd0MWs0cHpmdQ=="
+              href="https://www.instagram.com/vibescript.tech"
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -4 }}
               className="
                 w-14 h-14 rounded-full
-                bg-white/5 backdrop-blur-xl
-                border border-emerald-500/30
+                bg-white/5
+                border border-white/10
                 flex items-center justify-center
-                hover:border-emerald-400
-                hover:bg-emerald-500/10
-                hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]
+                text-emerald-400
+                hover:border-emerald-400/40
+                hover:bg-white/10
                 transition-all
               "
             >
-              <FaInstagram className="w-6 h-6 text-emerald-300" />
+              <FaInstagram className="w-6 h-6" />
             </motion.a>
 
             {/* WhatsApp */}
@@ -134,20 +124,19 @@ export default function Contact() {
               href="https://wa.me/919226539203"
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -4 }}
               className="
                 w-14 h-14 rounded-full
-                bg-white/5 backdrop-blur-xl
-                border border-emerald-500/30
+                bg-white/5
+                border border-white/10
                 flex items-center justify-center
-                hover:border-emerald-400
-                hover:bg-emerald-500/10
-                hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]
+                text-emerald-400
+                hover:border-emerald-400/40
+                hover:bg-white/10
                 transition-all
               "
             >
-              <FaWhatsapp className="w-6 h-6 text-emerald-300" />
+              <FaWhatsapp className="w-6 h-6" />
             </motion.a>
           </motion.div>
         </motion.div>
