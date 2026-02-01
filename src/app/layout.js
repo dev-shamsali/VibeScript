@@ -1,7 +1,7 @@
 import './globals.css'
 import { Sora, Plus_Jakarta_Sans } from 'next/font/google'
 
-/* --------------------------------
+/* -------------------------------
    Fonts
 -------------------------------- */
 
@@ -17,8 +17,8 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
 })
 
-/* --------------------------------
-   Metadata
+/* -------------------------------
+   Metadata (SEO + FAVICON)
 -------------------------------- */
 
 export const metadata = {
@@ -28,6 +28,18 @@ export const metadata = {
   keywords:
     'web development, next.js, react, full stack, devops, saas, website agency',
   authors: [{ name: 'VibeScript Team' }],
+
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
+  },
+
+  manifest: '/site.webmanifest',
+
   openGraph: {
     title: 'VibeScript – Digital Solutions Studio',
     description:
@@ -46,7 +58,7 @@ export const metadata = {
   },
 }
 
-/* --------------------------------
+/* -------------------------------
    Root Layout
 -------------------------------- */
 
@@ -57,10 +69,10 @@ export default function RootLayout({ children }) {
       className={`${sora.variable} ${jakarta.variable}`}
     >
       <body>
-        {/* Global fixed background (ONLY background source) */}
+        {/* Global fixed background */}
         <div id="global-bg" aria-hidden="true" />
 
-        {/* App content (everything scrolls above bg) */}
+        {/* App content */}
         <main id="app-content">
           {children}
         </main>
