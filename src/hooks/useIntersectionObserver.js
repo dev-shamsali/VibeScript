@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState, useRef } from 'react'
 
 export default function useIntersectionObserver(options = {}) {
@@ -5,18 +7,21 @@ export default function useIntersectionObserver(options = {}) {
   const ref = useRef(null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsIntersecting(entry.isIntersecting)
-    }, options)
+    const element = ref.current
+    if (!element) return
 
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting)
+      },
+      options
+    )
+
+    observer.observe(element)
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current)
-      }
+      observer.unobserve(element)
+      observer.disconnect()
     }
   }, [options])
 
