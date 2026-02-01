@@ -17,7 +17,11 @@ export default function Contact() {
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: 'easeOut' },
+    },
   }
 
   const stagger = {
@@ -29,27 +33,28 @@ export default function Contact() {
     e.preventDefault()
     setLoading(true)
 
-    emailjs.send(
-      "service_k91zghi",      
-      "template_9gjzeyx",   
-      {
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-      },
-      "kLDj4C60s-KChJqA-"      
-    )
-    .then(() => {
-      alert("Message sent successfully!")
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      setLoading(false)
-    })
-    .catch((error) => {
-      console.error("EmailJS Error:", error)
-      alert("Failed to send message. Try again later.")
-      setLoading(false)
-    })
+    emailjs
+      .send(
+        'service_k91zghi',
+        'template_9gjzeyx',
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        'kLDj4C60s-KChJqA-'
+      )
+      .then(() => {
+        alert('Message sent successfully!')
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error('EmailJS Error:', error)
+        alert('Failed to send message. Please try again later.')
+        setLoading(false)
+      })
   }
 
   const handleChange = (e) => {
@@ -57,36 +62,32 @@ export default function Contact() {
   }
 
   return (
-    <section
-      id="contact"
-      className="py-24 relative overflow-hidden bg-linear-to-b from-[#040B16] to-[#020617]"
-    >
-      {/* Floating Blue Flame Glows */}
+    <section id="contact" className="py-28 relative overflow-hidden">
+      {/* Floating Green Glows */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
-          className="absolute top-20 left-10 w-64 h-64 bg-[#00A8FF]/15 blur-3xl rounded-full"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-20 left-10 w-72 h-72 bg-emerald-500/20 blur-3xl rounded-full"
+          animate={{ y: [0, -25, 0] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute bottom-10 right-10 w-72 h-72 bg-[#005DFF]/25 blur-3xl rounded-full"
-          animate={{ y: [0, 25, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-10 right-10 w-80 h-80 bg-green-400/20 blur-3xl rounded-full"
+          animate={{ y: [0, 30, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-        
         {/* Header */}
         <motion.h2
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-120px" }}
-          className="text-4xl md:text-5xl font-bold text-center mb-16"
+          viewport={{ once: true, margin: '-120px' }}
+          className="text-4xl md:text-5xl font-extrabold text-center mb-14"
         >
-          Get In{" "}
-          <span className="bg-linear-to-r from-[#00A8FF] via-[#24C9FF] to-[#005DFF] bg-clip-text text-transparent">
+          Get In{' '}
+          <span className="gradient-text">
             Touch
           </span>
         </motion.h2>
@@ -96,29 +97,29 @@ export default function Contact() {
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-120px" }}
-          className="bg-slate-900/70 border border-slate-800 rounded-2xl p-8 backdrop-blur-xl 
-          shadow-[0_0_30px_rgba(0,168,255,0.15)]"
+          viewport={{ once: true, margin: '-120px' }}
+          className="bg-slate-900/70 border border-emerald-500/20 rounded-2xl p-8 md:p-10
+          backdrop-blur-xl shadow-[0_0_40px_rgba(16,185,129,0.25)]"
         >
           {/* Contact Info */}
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
-            className="grid sm:grid-cols-3 gap-6 mb-12 text-center"
+            className="grid sm:grid-cols-3 gap-6 mb-14 text-center"
           >
             <motion.div variants={fadeUp}>
-              <Mail className="w-8 h-8 mx-auto mb-2 text-blue-400" />
-              <p className="text-slate-300">voronix.solution@gmail.com</p>
+              <Mail className="w-8 h-8 mx-auto mb-2 note: text-emerald-400" />
+              <p className="text-slate-300">contact@vibescript.in</p>
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <PhoneCall className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+              <PhoneCall className="w-8 h-8 mx-auto mb-2 text-emerald-400" />
               <p className="text-slate-300">+91 92265 39203</p>
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <MapPin className="w-8 h-8 mx-auto mb-2 text-blue-400" />
+              <MapPin className="w-8 h-8 mx-auto mb-2 text-emerald-400" />
               <p className="text-slate-300">Mumbai · Remote</p>
             </motion.div>
           </motion.div>
@@ -140,8 +141,8 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="Your Name"
                 required
-                className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700 rounded-lg text-white 
-                focus:outline-none focus:ring-2 focus:ring-[#00A8FF] transition-all"
+                className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700 rounded-lg text-white
+                focus:outline-none focus:ring-2 focus:ring-emerald-500/70 transition-all"
               />
 
               <input
@@ -152,7 +153,7 @@ export default function Contact() {
                 placeholder="Your Email"
                 required
                 className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700 rounded-lg text-white
-                focus:outline-none focus:ring-2 focus:ring-[#00A8FF] transition-all"
+                focus:outline-none focus:ring-2 focus:ring-emerald-500/70 transition-all"
               />
             </motion.div>
 
@@ -165,8 +166,8 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="Subject"
                 required
-                className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700 rounded-lg text-white 
-                focus:outline-none focus:ring-2 focus:ring-[#00A8FF] transition-all"
+                className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700 rounded-lg text-white
+                focus:outline-none focus:ring-2 focus:ring-emerald-500/70 transition-all"
               />
             </motion.div>
 
@@ -179,8 +180,8 @@ export default function Contact() {
                 rows="6"
                 placeholder="Your Message"
                 required
-                className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700 rounded-lg text-white 
-                focus:outline-none focus:ring-2 focus:ring-[#00A8FF] transition-all resize-none"
+                className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700 rounded-lg text-white
+                focus:outline-none focus:ring-2 focus:ring-emerald-500/70 transition-all resize-none"
               />
             </motion.div>
 
@@ -191,11 +192,13 @@ export default function Contact() {
               whileTap={{ scale: 0.96 }}
               type="submit"
               disabled={loading}
-              className="w-full px-8 py-4 bg-linear-to-r from-[#00A8FF] to-[#005DFF] rounded-lg font-semibold text-white
-              hover:shadow-[0_0_20px_#009DFF80] transition-all duration-300 flex items-center justify-center gap-2
+              className="w-full px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600
+              rounded-lg font-semibold text-white
+              hover:shadow-[0_0_25px_rgba(16,185,129,0.6)]
+              transition-all duration-300 flex items-center justify-center gap-2
               disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Sending..." : "Send Message"}
+              {loading ? 'Sending...' : 'Send Message'}
               <Send className="w-5 h-5" />
             </motion.button>
           </motion.form>

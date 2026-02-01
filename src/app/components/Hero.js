@@ -1,165 +1,188 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { ArrowRight, Sparkles, Code2, ShieldCheck, Rocket } from 'lucide-react'
-import { useCallback } from 'react'
-import { motion } from 'framer-motion'
+import gsap from 'gsap'
 
 export default function Hero() {
-  const scrollToSection = useCallback((id) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  }, []);
+  const sectionRef = useRef(null)
+  const glowLeft = useRef(null)
+  const glowRight = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      /* --------------------------------
+         HERO INTRO TIMELINE (CINEMATIC)
+      --------------------------------- */
+      const tl = gsap.timeline({ delay: 0.2 })
+
+      tl.from('.hero-title-line', {
+        y: 120,
+        opacity: 0,
+        stagger: 0.15,
+        ease: 'power4.out',
+        duration: 1.2,
+      })
+        .from(
+          '.hero-subtitle',
+          {
+            y: 60,
+            opacity: 0,
+            duration: 1,
+          },
+          '-=0.5'
+        )
+        .from(
+          '.hero-cta',
+          {
+            scale: 0.9,
+            opacity: 0,
+            ease: 'back.out(1.6)',
+            duration: 0.9,
+          },
+          '-=0.4'
+        )
+        .from(
+          '.hero-panel',
+          {
+            x: 120,
+            opacity: 0,
+            duration: 1.3,
+            ease: 'power4.out',
+          },
+          '-=0.6'
+        )
+
+      /* --------------------------------
+         FLOATING GLOWS (SUBTLE PARALLAX)
+      --------------------------------- */
+      gsap.to(glowLeft.current, {
+        y: 70,
+        repeat: -1,
+        yoyo: true,
+        duration: 8,
+        ease: 'sine.inOut',
+      })
+
+      gsap.to(glowRight.current, {
+        y: -80,
+        repeat: -1,
+        yoyo: true,
+        duration: 9,
+        ease: 'sine.inOut',
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
     <section
+      ref={sectionRef}
       id="home"
-      className="relative min-h-screen flex items-center pt-24 overflow-hidden"
+      className="relative min-h-screen flex items-center pt-28 overflow-hidden"
     >
-      {/* Background */}
-      <motion.div 
-        className="absolute inset-0 bg-linear-to-br from-[#020617] via-[#020b24] to-[#050816] pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2 }}
-      />
-
-      {/* Blue Flame Glows */}
+      {/* Accent Glows */}
       <div className="pointer-events-none absolute inset-0">
-        <motion.div
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 0.8, y: 0 }}
-          transition={{ duration: 1.5 }}
-          className="absolute -top-32 -left-10 w-64 h-64 rounded-full bg-[#00A8FF]/20 blur-3xl animate-float"
+        <div
+          ref={glowLeft}
+          className="absolute -top-32 -left-24 w-96 h-96 rounded-full bg-emerald-500/25 blur-[140px]"
         />
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 0.8, y: 0 }}
-          transition={{ duration: 1.6 }}
-          className="absolute top-1/3 -right-20 w-72 h-72 rounded-full bg-[#24C9FF]/20 blur-3xl animate-float"
+        <div
+          ref={glowRight}
+          className="absolute bottom-0 -right-32 w-[32rem] h-[32rem] rounded-full bg-green-400/20 blur-[160px]"
         />
       </div>
 
+      {/* CONTENT */}
       <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-[1.6fr,1fr] gap-16 items-center">
 
-        <div className="grid lg:grid-cols-[1.5fr,1fr] gap-12 items-center">
-
-          {/* LEFT SIDE */}
-          <motion.div
-            className="space-y-8"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-
-            {/* Title */}
-            <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
-              initial="hidden"
-              animate="show"
-              variants={{
-                hidden: { opacity: 0, y: 40 },
-                show: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { duration: 0.9 }
-                }
-              }}
-            >
-              <span className="bg-linear-to-r from-[#00A8FF] via-[#24C9FF] to-[#005DFF] bg-clip-text text-transparent">
-                Igniting Digital
+          {/* LEFT */}
+          <div className="space-y-10">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.1]">
+              <span className="hero-title-line gradient-text block">
+                Build Digital Products
               </span>
-              <br />
-              <span className="text-white">Experiences for Your Business</span>
-            </motion.h1>
+              <span className="hero-title-line text-white block">
+                That Actually Scale
+              </span>
+            </h1>
 
-            {/* Subheading */}
-            <motion.p
-              className="text-base sm:text-lg md:text-xl text-slate-300 max-w-xl"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.4 }}
-            >
-              We help brands grow by crafting modern, high-quality digital solutions 
-              that elevate user experience, strengthen identity, and unlock real business results.
-            </motion.p>
+            <p className="hero-subtitle text-base sm:text-lg md:text-xl text-slate-300 max-w-xl leading-relaxed">
+              VibeScript is a digital solutions studio helping startups and businesses
+              build scalable platforms, high-performance websites, and modern SaaS products.
+            </p>
 
-            {/* CTAs */}
-            <motion.div
-              className="flex flex-wrap gap-4 pt-2"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.6 }}
-            >
-              <motion.button
-                whileHover={{ scale: 1.07 }}
-                whileTap={{ scale: 0.95 }}
+            <div className="hero-cta flex flex-wrap gap-5 pt-2">
+              <button
                 onClick={() => scrollToSection('projects')}
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-linear-to-r from-[#00A8FF] to-[#005DFF] font-semibold text-sm sm:text-base shadow-lg shadow-blue-700/40 hover:shadow-blue-500/60 transition-transform"
+                className="
+                  inline-flex items-center gap-2 px-9 py-4 rounded-full
+                  bg-gradient-to-r from-emerald-500 to-green-600
+                  font-semibold text-sm sm:text-base text-white
+                  shadow-2xl shadow-emerald-600/40
+                  hover:shadow-emerald-500/70
+                  transition-all hover:scale-105 active:scale-95
+                "
               >
                 View Our Work
                 <ArrowRight className="w-5 h-5" />
-              </motion.button>
+              </button>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() => scrollToSection('contact')}
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-blue-500/40 bg-blue-500/5 text-sm sm:text-base text-blue-100 hover:bg-blue-500/10 hover:border-blue-400 transition-colors"
+                className="
+                  inline-flex items-center gap-2 px-9 py-4 rounded-full
+                  border border-emerald-500/40 bg-emerald-500/10
+                  text-sm sm:text-base text-emerald-100
+                  hover:bg-emerald-500/20 hover:border-emerald-400
+                  transition-all
+                "
               >
                 Let&apos;s Collaborate
-              </motion.button>
-            </motion.div>
-          </motion.div>
+              </button>
+            </div>
+          </div>
 
-          {/* RIGHT INFO PANEL */}
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: 70 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            <div className="absolute -inset-1 bg-linear-to-tr from-[#00A8FF]/20 via-transparent to-[#005DFF]/40 blur-2xl opacity-70" />
+          {/* RIGHT PANEL */}
+          <div className="hero-panel relative">
+            <div className="absolute -inset-1 bg-gradient-to-tr from-emerald-400/30 via-transparent to-green-600/50 blur-2xl opacity-80" />
 
-            <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-7 lg:p-8 shadow-[0_20px_60px_rgba(15,23,42,0.9)]">
-              
-              <div className="flex items-center justify-between mb-6">
+            <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-7 shadow-[0_30px_80px_rgba(0,0,0,0.8)]">
+
+              <div className="flex items-center justify-between mb-7">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Studio Status</p>
-                  <p className="text-lg font-semibold text-sky-100">Accepting Projects</p>
+                  <p className="text-xs uppercase tracking-widest text-slate-400">
+                    Studio Status
+                  </p>
+                  <p className="text-lg font-semibold text-emerald-100">
+                    Accepting Projects
+                  </p>
                 </div>
-                <div className="h-10 w-10 rounded-full bg-linear-to-tr from-[#00A8FF] to-[#005DFF] flex items-center justify-center shadow-lg shadow-blue-700/50">
-                  <Rocket className="w-5 h-5 text-white" />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <div className="rounded-2xl bg-slate-900/60 border border-blue-500/20 p-4 space-y-2">
-                  <Code2 className="w-5 h-5 text-blue-300" />
-                  <p className="text-xs text-slate-400">Focus</p>
-                  <p className="text-sm font-medium text-slate-100">Digital Solutions</p>
-                </div>
-
-                <div className="rounded-2xl bg-slate-900/60 border border-cyan-500/20 p-4 space-y-2">
-                  <ShieldCheck className="w-5 h-5 text-cyan-300" />
-                  <p className="text-xs text-slate-400">Approach</p>
-                  <p className="text-sm font-medium text-slate-100">Reliability First</p>
-                </div>
-
-                <div className="rounded-2xl bg-slate-900/60 border border-sky-500/20 p-4 space-y-2">
-                  <Sparkles className="w-5 h-5 text-sky-300" />
-                  <p className="text-xs text-slate-400">Style</p>
-                  <p className="text-sm font-medium text-slate-100">Modern & Creative</p>
+                <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-emerald-500 to-green-600 flex items-center justify-center shadow-lg shadow-emerald-600/50">
+                  <Rocket className="w-6 h-6 text-white" />
                 </div>
               </div>
 
-              <div className="mt-2 border-t border-white/10 pt-4 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm text-slate-300">
-                <p>Helping businesses grow through modern digital experiences.</p>
-                <p className="text-blue-300 font-medium">VORONIX Solutions · 2025</p>
+              <div className="grid sm:grid-cols-3 gap-5 mb-7">
+                <InfoCard icon={<Code2 />} title="Focus" value="Web & SaaS" />
+                <InfoCard icon={<ShieldCheck />} title="Approach" value="Secure & Scalable" />
+                <InfoCard icon={<Sparkles />} title="Style" value="Clean UI/UX" />
+              </div>
+
+              <div className="border-t border-white/10 pt-4 flex justify-between text-xs sm:text-sm text-slate-300">
+                <p>Engineering growth-driven digital products.</p>
+                <p className="text-emerald-300 font-medium">
+                  VibeScript · 2025
+                </p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>
@@ -167,3 +190,15 @@ export default function Hero() {
   )
 }
 
+/* --------------------------------
+   INFO CARD
+--------------------------------- */
+function InfoCard({ icon, title, value }) {
+  return (
+    <div className="rounded-2xl bg-slate-900/70 border border-emerald-500/20 p-4 space-y-2">
+      <div className="text-emerald-300">{icon}</div>
+      <p className="text-xs text-slate-400">{title}</p>
+      <p className="text-sm font-medium text-slate-100">{value}</p>
+    </div>
+  )
+}

@@ -4,116 +4,141 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /* -------------------------------------------
-   Register GSAP Plugins only on Client
+   GSAP Plugin Registration (Client-safe)
 -------------------------------------------- */
-if (typeof window !== "undefined" && gsap && !gsap.core.globals().ScrollTrigger) {
+if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 /* -------------------------------------------
-   Reusable Animation Functions
+   GLOBAL DEFAULTS (Premium Feel)
 -------------------------------------------- */
+gsap.defaults({
+  ease: "power3.out",
+  duration: 1.1,
+});
 
-export const animateHero = () => {
-  gsap.context(() => {
-    gsap.from(".hero-title", {
-      duration: 1,
-      y: 100,
+/* -------------------------------------------
+   HERO INTRO ANIMATION (Boom Effect)
+-------------------------------------------- */
+export const animateHero = (scope) => {
+  return gsap.context(() => {
+    const tl = gsap.timeline();
+
+    tl.from(".hero-title", {
+      y: 120,
       opacity: 0,
+      stagger: 0.15,
       ease: "power4.out",
-      stagger: 0.2,
-    });
-
-    gsap.from(".hero-subtitle", {
-      duration: 1,
-      y: 50,
-      opacity: 0,
-      ease: "power4.out",
-      delay: 0.3,
-    });
-
-    gsap.from(".hero-cta", {
-      duration: 1,
-      scale: 0.8,
-      opacity: 0,
-      ease: "back.out(1.7)",
-      delay: 0.6,
-    });
-  });
+    })
+      .from(
+        ".hero-subtitle",
+        {
+          y: 60,
+          opacity: 0,
+        },
+        "-=0.4"
+      )
+      .from(
+        ".hero-cta",
+        {
+          scale: 0.85,
+          opacity: 0,
+          ease: "back.out(1.6)",
+        },
+        "-=0.3"
+      );
+  }, scope);
 };
 
-export const animateSection = (selector) => {
-  gsap.context(() => {
+/* -------------------------------------------
+   SECTION FADE + SLIDE (Standard Sections)
+-------------------------------------------- */
+export const animateSection = (selector, scope) => {
+  return gsap.context(() => {
     gsap.from(selector, {
       scrollTrigger: {
         trigger: selector,
         start: "top 80%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse",
-        markers: false,
+        once: true,
       },
-      duration: 1,
-      y: 50,
+      y: 80,
       opacity: 0,
-      stagger: 0.2,
+      stagger: 0.18,
       ease: "power3.out",
     });
-  });
+  }, scope);
 };
 
-export const animateCards = (selector) => {
-  gsap.context(() => {
+/* -------------------------------------------
+   CARD STAGGER (Projects, Services, Features)
+-------------------------------------------- */
+export const animateCards = (selector, scope) => {
+  return gsap.context(() => {
     gsap.from(selector, {
       scrollTrigger: {
         trigger: selector,
         start: "top 85%",
-        markers: false,
+        once: true,
       },
-      duration: 0.8,
-      y: 60,
+      y: 70,
       opacity: 0,
       stagger: 0.15,
       ease: "power3.out",
     });
-  });
+  }, scope);
 };
 
-export const parallaxEffect = (selector, speed = 0.5) => {
-  gsap.context(() => {
-    gsap.to(selector, {
-      scrollTrigger: {
-        trigger: selector,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-        markers: false,
-      },
-      y: (i, el) => (1 - speed) * ScrollTrigger.maxScroll(window),
-      ease: "none",
-    });
-  });
+/* -------------------------------------------
+   PARALLAX FLOAT (Safe & Smooth)
+-------------------------------------------- */
+export const parallaxEffect = (selector, scope, distance = 60) => {
+  return gsap.context(() => {
+    gsap.fromTo(
+      selector,
+      { y: -distance },
+      {
+        y: distance,
+        scrollTrigger: {
+          trigger: selector,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.6,
+        },
+        ease: "none",
+      }
+    );
+  }, scope);
 };
 
-export const fadeInUp = (selector, delay = 0) => {
-  gsap.context(() => {
+/* -------------------------------------------
+   SIMPLE FADE UP (Headings / Text)
+-------------------------------------------- */
+export const fadeInUp = (selector, scope, delay = 0) => {
+  return gsap.context(() => {
     gsap.from(selector, {
-      duration: 1,
       y: 60,
       opacity: 0,
+      delay,
       ease: "power4.out",
-      delay: delay,
     });
-  });
+  }, scope);
 };
 
-export const staggerFadeIn = (selector, staggerAmount = 0.1) => {
-  gsap.context(() => {
+/* -------------------------------------------
+   STAGGER TEXT / LIST ITEMS
+-------------------------------------------- */
+export const staggerFadeIn = (
+  selector,
+  scope,
+  staggerAmount = 0.12
+) => {
+  return gsap.context(() => {
     gsap.from(selector, {
-      duration: 0.8,
       opacity: 0,
-      y: 30,
+      y: 40,
       stagger: staggerAmount,
       ease: "power3.out",
     });
-  });
+  }, scope);
 };

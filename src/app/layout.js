@@ -1,21 +1,42 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Sora, Plus_Jakarta_Sans } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+/* -------------------------------
+   Fonts
+-------------------------------- */
+
+const sora = Sora({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  display: 'swap',
+})
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+})
+
+/* -------------------------------
+   Metadata
+-------------------------------- */
 
 export const metadata = {
-  title: 'Voronix solution',
-  description: 'Building Digital Experiences Together - Alex, Jordan & Morgan',
-  keywords: 'web development, portfolio, react, next.js, full stack',
-  authors: [{ name: 'DevTrio Team' }],
+  title: 'VibeScript – Digital Solutions Studio',
+  description:
+    'VibeScript builds modern, scalable digital solutions for startups and businesses.',
+  keywords:
+    'web development, next.js, react, full stack, devops, saas, website agency',
+  authors: [{ name: 'VibeScript Team' }],
   openGraph: {
-    title: 'DevTrio - Three Developer Portfolio',
-    description: 'Building Digital Experiences Together',
-    url: 'https://devtrio.dev',
-    siteName: 'DevTrio',
+    title: 'VibeScript – Digital Solutions Studio',
+    description:
+      'Modern web platforms, scalable systems, and premium digital experiences.',
+    url: 'https://vibescript.cloud',
+    siteName: 'VibeScript',
     images: [
       {
-        url: '/og-image.png',
+        url: '/logo.png',
         width: 1200,
         height: 630,
       },
@@ -25,10 +46,25 @@ export const metadata = {
   },
 }
 
+/* -------------------------------
+   Root Layout
+-------------------------------- */
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>{children}</body>
+    <html
+      lang="en"
+      className={`${sora.variable} ${jakarta.variable} scroll-smooth`}
+    >
+      <body>
+        {/* Global fixed background */}
+        <div id="global-bg" />
+
+        {/* App content */}
+        <div id="app-content">
+          {children}
+        </div>
+      </body>
     </html>
   )
 }

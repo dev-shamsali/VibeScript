@@ -1,26 +1,41 @@
+'use client'
+
 import { useEffect } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-export default function useScrollAnimation() {
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
+
+/* ----------------------------------------------------
+   GSAP Scroll Animation Hook (Premium)
+----------------------------------------------------- */
+
+export default function useGsapScrollAnimation({
+  selector = '.gsap-fade-up',
+  y = 80,
+  opacity = 0,
+  stagger = 0.15,
+  start = 'top 80%',
+  once = true,
+} = {}) {
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in')
-          }
-        })
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-      }
-    )
+    const ctx = gsap.context(() => {
+      gsap.from(selector, {
+        y,
+        opacity,
+        stagger,
+        duration: 1.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: selector,
+          start,
+          once,
+        },
+      })
+    })
 
-    const elements = document.querySelectorAll('.animate-on-scroll')
-    elements.forEach((el) => observer.observe(el))
-
-    return () => {
-      elements.forEach((el) => observer.unobserve(el))
-    }
-  }, [])
+    return () => ctx.revert()
+  }, [selector, y, opacity, stagger, start, once])
 }

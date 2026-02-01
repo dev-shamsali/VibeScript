@@ -8,24 +8,34 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-slate-900 border-t border-slate-800 py-12">
+    <footer className="relative py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+
+        {/* Top Grid */}
+        <div className="grid md:grid-cols-4 gap-10 mb-12">
+
+          {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-                Voronix Solution
+            <h3 className="text-2xl font-extrabold gradient-text mb-4">
+              VibeScript
             </h3>
-            <p className="text-slate-400">Building the future, one line of code at a time.</p>
+            <p className="text-slate-400 leading-relaxed">
+              We design, build, and scale modern digital products that help
+              businesses grow with confidence.
+            </p>
           </div>
-          
+
+          {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold text-white mb-4">
+              Quick Links
+            </h4>
             <div className="space-y-2">
               {['home', 'about', 'projects', 'services', 'contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item)}
-                  className="block text-slate-400 hover:text-purple-400 transition-colors capitalize"
+                  className="block text-slate-400 hover:text-emerald-400 transition-colors capitalize"
                 >
                   {item}
                 </button>
@@ -33,34 +43,66 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Services */}
           <div>
-            <h4 className="font-semibold mb-4">Services</h4>
+            <h4 className="font-semibold text-white mb-4">
+              Services
+            </h4>
             <div className="space-y-2 text-slate-400">
-              <p>Web Development</p>
-              <p>Deployment & DevOps</p>
-              <p>Backend Systems</p>
+              <p>Web & SaaS Development</p>
+              <p>Cloud & DevOps</p>
+              <p>Backend & APIs</p>
+              <p>Performance & Security</p>
             </div>
           </div>
 
+          {/* Social */}
           <div>
-            <h4 className="font-semibold mb-4">Connect</h4>
+            <h4 className="font-semibold text-white mb-4">
+              Connect
+            </h4>
             <div className="flex gap-4">
-              <button className="p-3 bg-slate-800 rounded-full hover:bg-purple-600 transition-colors">
-                <Github className="w-5 h-5" />
-              </button>
-              <button className="p-3 bg-slate-800 rounded-full hover:bg-purple-600 transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </button>
-              <button className="p-3 bg-slate-800 rounded-full hover:bg-purple-600 transition-colors">
-                <Mail className="w-5 h-5" />
-              </button>
+              <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-slate-900/70 border border-emerald-500/20
+                hover:bg-emerald-500/10 hover:border-emerald-400 transition-all"
+              >
+                <Github className="w-5 h-5 text-emerald-300" />
+              </a>
+
+              <a
+                href="https://linkedin.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full bg-slate-900/70 border border-emerald-500/20
+                hover:bg-emerald-500/10 hover:border-emerald-400 transition-all"
+              >
+                <Linkedin className="w-5 h-5 text-emerald-300" />
+              </a>
+
+              <a
+                href="mailto:contact@vibescript.in"
+                className="p-3 rounded-full bg-slate-900/70 border border-emerald-500/20
+                hover:bg-emerald-500/10 hover:border-emerald-400 transition-all"
+              >
+                <Mail className="w-5 h-5 text-emerald-300" />
+              </a>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 text-center text-slate-400">
-          <p>&copy; 2025 Voronix Solution. All rights reserved. Built with Next.js & Tailwind CSS.</p>
+        {/* Bottom */}
+        <div className="border-t border-white/10 pt-8 text-center text-slate-400 text-sm">
+          <p>
+            © {new Date().getFullYear()} VibeScript. All rights reserved.
+          </p>
+          <p className="mt-1">
+            Built with Next.js & Tailwind CSS.
+          </p>
         </div>
+
       </div>
     </footer>
   )
