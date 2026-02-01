@@ -12,11 +12,11 @@ import { motion } from 'framer-motion'
 
 export default function Services() {
   const fadeUp = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 60 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: 'easeOut' },
+      transition: { duration: 0.8, ease: 'easeOut' },
     },
   }
 
@@ -59,18 +59,18 @@ export default function Services() {
   ]
 
   return (
-    <section id="services" className="py-28 relative overflow-hidden">
-      {/* Floating Accent Glows */}
+    <section id="services" className="relative py-32 overflow-hidden">
+      {/* Ambient Glows */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
-          className="absolute top-10 left-10 w-72 h-72 bg-emerald-500/20 blur-3xl rounded-full"
-          animate={{ y: [0, -25, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-10 left-10 w-96 h-96 bg-emerald-500/20 blur-[160px] rounded-full"
+          animate={{ y: [0, -30, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute bottom-10 right-10 w-80 h-80 bg-green-400/20 blur-3xl rounded-full"
-          animate={{ y: [0, 30, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute bottom-0 right-10 w-[28rem] h-[28rem] bg-green-400/20 blur-[180px] rounded-full"
+          animate={{ y: [0, 35, 0] }}
+          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
         />
       </div>
 
@@ -81,7 +81,7 @@ export default function Services() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-120px' }}
-          className="text-4xl md:text-5xl font-extrabold text-center mb-16"
+          className="text-4xl md:text-5xl font-extrabold text-center mb-20"
         >
           Our{' '}
           <span className="gradient-text">
@@ -91,7 +91,7 @@ export default function Services() {
 
         {/* Services Grid */}
         <motion.div
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12"
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -104,51 +104,49 @@ export default function Services() {
               <motion.div
                 key={idx}
                 variants={fadeUp}
-                whileHover={{ scale: 1.04 }}
-                transition={{ type: 'spring', stiffness: 120, damping: 12 }}
-                className="
-                  group relative p-8 rounded-2xl
-                  bg-slate-900/70 border border-emerald-500/20
-                  transition-all duration-500
-                  hover:border-emerald-400/50
-                  hover:shadow-[0_0_45px_rgba(16,185,129,0.25)]
-                  backdrop-blur-xl
-                "
+                whileHover={{ y: -12 }}
+                transition={{ type: 'spring', stiffness: 120, damping: 14 }}
+                className="group relative rounded-3xl p-[1px]"
               >
-                {/* Gradient Hover Glow */}
+                {/* Gradient Border */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-400 to-green-600 opacity-30" />
+
+                {/* Glass Card */}
                 <div
                   className="
-                    absolute inset-0 rounded-2xl
-                    bg-gradient-to-br from-emerald-500/10 to-green-600/10
-                    opacity-0 group-hover:opacity-100
-                    transition-opacity duration-500
+                    relative h-full rounded-3xl p-8
+                    bg-white/5 backdrop-blur-xl
+                    border border-white/10
+                    transition-all duration-500
+                    group-hover:border-emerald-400/50
+                    group-hover:shadow-[0_0_55px_rgba(16,185,129,0.25)]
                   "
-                />
+                >
+                  <div className="relative z-10 text-center">
+                    {/* Icon */}
+                    <motion.div
+                      whileHover={{ scale: 1.15 }}
+                      transition={{ type: 'spring', stiffness: 160, damping: 10 }}
+                      className="
+                        w-20 h-20 mx-auto mb-6 rounded-2xl
+                        bg-gradient-to-tr from-emerald-500 to-green-600
+                        flex items-center justify-center
+                        shadow-[0_0_26px_rgba(16,185,129,0.6)]
+                      "
+                    >
+                      <Icon className="w-10 h-10 text-white" />
+                    </motion.div>
 
-                <div className="relative z-10 text-center">
-                  {/* Icon */}
-                  <motion.div
-                    whileHover={{ scale: 1.15 }}
-                    transition={{ type: 'spring', stiffness: 150, damping: 10 }}
-                    className="
-                      w-20 h-20 mx-auto mb-6 rounded-2xl
-                      bg-gradient-to-tr from-emerald-500 to-green-600
-                      flex items-center justify-center
-                      shadow-[0_0_22px_rgba(16,185,129,0.6)]
-                    "
-                  >
-                    <Icon className="w-10 h-10 text-white" />
-                  </motion.div>
+                    {/* Title */}
+                    <h3 className="text-xl font-semibold text-white mb-3">
+                      {service.title}
+                    </h3>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-semibold text-white mb-3">
-                    {service.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-slate-300 leading-relaxed">
-                    {service.desc}
-                  </p>
+                    {/* Description */}
+                    <p className="text-slate-300 leading-relaxed">
+                      {service.desc}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             )

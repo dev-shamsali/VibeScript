@@ -1,17 +1,15 @@
 @import "tailwindcss";
 
-/* -----------------------------------------------------
-   Root Theme
------------------------------------------------------ */
+/* =====================================================
+   ROOT THEME
+===================================================== */
 :root {
   --foreground: 255, 255, 255;
-  --bg-dark: 2, 6, 23;
 }
 
-/* -----------------------------------------------------
-   Base Reset
------------------------------------------------------ */
-
+/* =====================================================
+   BASE RESET
+===================================================== */
 html,
 body {
   height: 100%;
@@ -32,10 +30,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* -----------------------------------------------------
-   Global Background Layer (🔥 WORKING)
------------------------------------------------------ */
-
+/* =====================================================
+   GLOBAL BACKGROUND (ONLY SOURCE OF BACKGROUND)
+===================================================== */
 #global-bg {
   position: fixed;
   inset: 0;
@@ -47,34 +44,32 @@ body {
   background-repeat: no-repeat;
 }
 
-/* Dark overlay + vignette */
+/* Cinematic overlay + vignette (LIGHTER, IMAGE SAFE) */
 #global-bg::after {
   content: "";
   position: absolute;
   inset: 0;
 
   background: linear-gradient(to bottom right,
-      rgba(2, 6, 23, 0.92),
-      rgba(2, 6, 23, 0.85),
-      rgba(2, 6, 23, 0.9));
+      rgba(2, 6, 23, 0.65),
+      rgba(2, 6, 23, 0.8));
 
-  box-shadow: inset 0 0 260px rgba(0, 0, 0, 0.95);
+  box-shadow: inset 0 0 240px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
 }
 
-/* -----------------------------------------------------
-   App Content Layer
------------------------------------------------------ */
-
+/* =====================================================
+   APP CONTENT LAYER
+===================================================== */
 #app-content {
   position: relative;
   z-index: 10;
   min-height: 100vh;
 }
 
-/* -----------------------------------------------------
-   Headings Font
------------------------------------------------------ */
-
+/* =====================================================
+   HEADINGS
+===================================================== */
 h1,
 h2,
 h3,
@@ -83,16 +78,15 @@ h5 {
   font-family: var(--font-heading), system-ui, sans-serif;
 }
 
-/* -----------------------------------------------------
-   Custom Scrollbar
------------------------------------------------------ */
-
+/* =====================================================
+   SCROLLBAR
+===================================================== */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: rgba(2, 6, 23, 0.8);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -104,62 +98,9 @@ h5 {
   background: linear-gradient(to bottom, #22c55e, #4ade80);
 }
 
-/* -----------------------------------------------------
-   Animations
------------------------------------------------------ */
-
-@layer utilities {
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-in;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.7s ease-out;
-  }
-
-  .animate-float {
-    animation: float 7s ease-in-out infinite;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(60px);
-      opacity: 0;
-    }
-
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-24px);
-    }
-  }
-}
-
-/* -----------------------------------------------------
-   Brand Gradient Text
------------------------------------------------------ */
-
+/* =====================================================
+   BRAND TEXT
+===================================================== */
 .gradient-text {
   background: linear-gradient(to right,
       #10b981,
@@ -170,16 +111,22 @@ h5 {
   background-clip: text;
 }
 
-/* -----------------------------------------------------
-   Cards & Glow
------------------------------------------------------ */
+/* =====================================================
+   GLASS / CARDS (USE THESE — NOT SOLID COLORS)
+===================================================== */
+.glass {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
 .card-hover {
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .card-hover:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   box-shadow: 0 25px 50px rgba(16, 185, 129, 0.35);
 }
 
@@ -191,11 +138,8 @@ h5 {
   content: "";
   position: absolute;
   inset: -2px;
-  background: linear-gradient(45deg,
-      #10b981,
-      #22c55e,
-      #4ade80);
   border-radius: inherit;
+  background: linear-gradient(45deg, #10b981, #22c55e, #4ade80);
   opacity: 0;
   transition: opacity 0.35s;
   z-index: -1;
@@ -205,11 +149,23 @@ h5 {
   opacity: 1;
 }
 
-/* -----------------------------------------------------
-   Blur Utility
------------------------------------------------------ */
+/* =====================================================
+   OPTIONAL FLOATING ANIMATION (FOR ORBS / DECOR)
+===================================================== */
+@layer utilities {
+  .animate-float {
+    animation: float 7s ease-in-out infinite;
+  }
 
-.blur-bg {
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-22px);
+    }
+  }
 }

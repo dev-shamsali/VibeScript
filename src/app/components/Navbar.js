@@ -2,171 +2,114 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
-
-/**
- * 🔹 Brand Config (easy future updates)
- */
-const BRAND_NAME = "VibeScript";
-const BRAND_GRADIENT = "from-emerald-400 to-green-600";
-const ACTIVE_COLOR = "text-emerald-400";
-const HOVER_COLOR = "hover:text-white";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar({ activeSection }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
-    setAboutOpen(false);
   };
 
-  const navItems = [
-    { name: "home" },
-    { name: "about", dropdown: true },
-    { name: "projects" },
-    { name: "services" },
-    { name: "contact" },
-  ];
+  const navItems = ["home", "about", "projects", "services", "contact"];
 
   return (
-    <nav className="fixed top-0 w-full bg-slate-950/80 backdrop-blur-lg z-50 border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <>
+      {/* ================= NAVBAR ================= */}
+      <nav className="fixed top-0 w-full z-50 bg-white/5 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* ⬇️ Taller navbar so logo breathes */}
+          <div className="h-16 flex items-center justify-between">
 
-          {/* LOGO + BRAND */}
-          <div
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => scrollToSection("home")}
-          >
+            {/* LOGO — REAL SIZE, SHARP */}
+            <div
+              onClick={() => scrollToSection("home")}
+              className="flex items-center cursor-pointer"
+            >
+              <Image
+                src="/logo.png"
+                alt="VibeScript Logo"
+                width={180}      // ✅ real size (NO scale)
+                height={200}
+                priority
+                className="object-contain"
+              />
+            </div>
+
+            {/* DESKTOP MENU */}
+            <div className="hidden md:flex items-center gap-8">
+              {navItems.map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item)}
+                  className={`capitalize transition ${activeSection === item
+                    ? "text-emerald-400 font-medium"
+                    : "text-slate-300 hover:text-white"
+                    }`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+
+            {/* MOBILE TOGGLE */}
+            <button
+              className="md:hidden text-white"
+              onClick={() => setMenuOpen(true)}
+            >
+              <Menu />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* ================= MOBILE DRAWER (LEFT) ================= */}
+      <div
+        className={`fixed inset-0 z-50 ${menuOpen ? "pointer-events-auto" : "pointer-events-none"
+          }`}
+      >
+        {/* Overlay */}
+        <div
+          onClick={() => setMenuOpen(false)}
+          className={`absolute inset-0 bg-black/60 transition-opacity ${menuOpen ? "opacity-100" : "opacity-0"
+            }`}
+        />
+
+        {/* Drawer */}
+        <div
+          className={`absolute left-0 top-0 h-full w-72 bg-slate-950/95 backdrop-blur-xl
+          border-r border-white/10 transition-transform duration-300
+          ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        >
+          {/* Drawer Header */}
+          <div className="h-20 flex items-center justify-between px-4 border-b border-white/10">
             <Image
               src="/logo.png"
               alt="VibeScript Logo"
-              width={56}
-              height={56}
-              className="drop-shadow-[0_0_12px_rgba(16,185,129,0.6)] object-contain"
+              width={88}
+              height={88}
+              className="object-contain"
             />
-
-            <span
-              className={`text-xl font-bold bg-gradient-to-r ${BRAND_GRADIENT} bg-clip-text text-transparent`}
-            >
-              {BRAND_NAME}
-            </span>
+            <button onClick={() => setMenuOpen(false)}>
+              <X className="text-white" />
+            </button>
           </div>
 
-          {/* DESKTOP MENU */}
-          <div className="hidden md:flex space-x-8 items-center">
+          {/* Drawer Menu */}
+          <div className="flex flex-col">
             {navItems.map((item) => (
-              <div key={item.name} className="relative">
-                {item.dropdown ? (
-                  <>
-                    <button
-                      onClick={() => setAboutOpen((p) => !p)}
-                      className={`capitalize flex items-center gap-1 transition-all ${activeSection === item.name
-                        ? `${ACTIVE_COLOR} font-semibold`
-                        : `text-slate-300 ${HOVER_COLOR}`
-                        }`}
-                    >
-                      About
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform ${aboutOpen ? "rotate-180" : ""
-                          }`}
-                      />
-                    </button>
-
-                    {aboutOpen && (
-                      <div className="absolute left-0 mt-2 w-44 bg-slate-900 border border-slate-700 rounded-lg shadow-lg">
-                        {[
-                          ["about", "Who We Are"],
-                          ["mission", "Our Mission"],
-                          ["vision", "Vision & Values"],
-                        ].map(([id, label]) => (
-                          <button
-                            key={id}
-                            onClick={() => scrollToSection(id)}
-                            className="block w-full text-left px-4 py-2 text-slate-200 hover:bg-slate-800"
-                          >
-                            {label}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <button
-                    onClick={() => scrollToSection(item.name)}
-                    className={`capitalize transition-all ${activeSection === item.name
-                      ? `${ACTIVE_COLOR} font-semibold`
-                      : `text-slate-300 ${HOVER_COLOR}`
-                      }`}
-                  >
-                    {item.name}
-                  </button>
-                )}
-              </div>
+              <button
+                key={item}
+                onClick={() => scrollToSection(item)}
+                className="px-6 py-4 text-left capitalize text-slate-300 hover:bg-white/10"
+              >
+                {item}
+              </button>
             ))}
           </div>
-
-          {/* MOBILE TOGGLE */}
-          <button
-            className="md:hidden text-white"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <X /> : <Menu />}
-          </button>
         </div>
       </div>
-
-      {/* MOBILE MENU */}
-      <div
-        className={`md:hidden bg-slate-900 border-t border-slate-800 transition-all duration-500 ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
-      >
-        {navItems.map((item) => (
-          <div key={item.name} className="border-b border-slate-800">
-            {item.dropdown ? (
-              <>
-                <button
-                  onClick={() => setAboutOpen((p) => !p)}
-                  className="w-full px-4 py-3 flex justify-between text-slate-300"
-                >
-                  About
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform ${aboutOpen ? "rotate-180" : ""
-                      }`}
-                  />
-                </button>
-
-                {aboutOpen && (
-                  <div className="bg-slate-800/60">
-                    {[
-                      ["about", "Who We Are"],
-                      ["mission", "Our Mission"],
-                      ["vision", "Vision & Values"],
-                    ].map(([id, label]) => (
-                      <button
-                        key={id}
-                        onClick={() => scrollToSection(id)}
-                        className="block w-full px-6 py-3 text-slate-200 hover:bg-slate-700"
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </>
-            ) : (
-              <button
-                onClick={() => scrollToSection(item.name)}
-                className="block w-full px-4 py-3 capitalize text-slate-300 hover:bg-slate-800"
-              >
-                {item.name}
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-    </nav>
+    </>
   );
 }

@@ -9,7 +9,7 @@ export default function About() {
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.7, ease: 'easeOut' },
+      transition: { duration: 0.8, ease: 'easeOut' },
     },
   }
 
@@ -46,16 +46,16 @@ export default function About() {
   ]
 
   return (
-    <section id="about" className="py-24 relative">
+    <section id="about" className="relative py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <motion.h2
-          className="text-4xl md:text-5xl font-extrabold text-center mb-14"
+          className="text-4xl md:text-5xl font-extrabold text-center mb-16"
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-120px' }}
         >
           About{' '}
           <span className="gradient-text">
@@ -65,11 +65,11 @@ export default function About() {
 
         {/* Intro Paragraph */}
         <motion.p
-          className="text-center text-slate-300 max-w-3xl mx-auto mb-18 text-lg leading-relaxed"
+          className="text-center text-slate-300 max-w-3xl mx-auto mb-20 text-lg leading-relaxed"
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-120px' }}
         >
           At VibeScript, we blend strategy, modern engineering, and clean design to
           build digital products that scale. From high-performance websites to
@@ -79,27 +79,38 @@ export default function About() {
 
         {/* About Cards */}
         <motion.div
-          className="grid md:grid-cols-3 gap-8 mb-20"
+          className="grid md:grid-cols-3 gap-10 mb-24"
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-120px' }}
         >
           {sections.map((item, idx) => (
             <motion.div
               key={idx}
               variants={fadeUp}
-              className="group relative bg-slate-900/60 border border-emerald-500/20
-              rounded-2xl p-8 transition-all duration-500
-              hover:border-emerald-400/60 hover:shadow-[0_0_40px_rgba(16,185,129,0.25)]"
+              whileHover={{ y: -8 }}
+              className="
+                group relative
+                rounded-3xl p-8
+                bg-white/5 backdrop-blur-xl
+                border border-white/10
+                transition-all duration-500
+                hover:border-emerald-400/50
+                hover:shadow-[0_0_45px_rgba(16,185,129,0.25)]
+              "
             >
-              {/* Hover Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-green-600/10
-              opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+              {/* Glow Overlay */}
+              <div className="
+                absolute inset-0 rounded-3xl
+                bg-gradient-to-br from-emerald-500/10 to-green-600/10
+                opacity-0 group-hover:opacity-100
+                transition-opacity duration-500
+              " />
 
               <div className="relative z-10 text-center">
-                <item.icon className="w-12 h-12 mx-auto mb-4 text-emerald-400 drop-shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
-                <h3 className="text-2xl font-semibold mb-3 text-white">
+                <item.icon className="w-12 h-12 mx-auto mb-5 text-emerald-400 drop-shadow-[0_0_14px_rgba(16,185,129,0.6)]" />
+                <h3 className="text-2xl font-semibold mb-4 text-white">
                   {item.title}
                 </h3>
                 <p className="text-slate-300 leading-relaxed">
@@ -112,11 +123,11 @@ export default function About() {
 
         {/* Capabilities Title */}
         <motion.h3
-          className="text-3xl font-bold text-center mb-10"
+          className="text-3xl font-bold text-center mb-12"
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-120px' }}
         >
           What{' '}
           <span className="gradient-text">
@@ -126,21 +137,26 @@ export default function About() {
 
         {/* Capabilities Grid */}
         <motion.div
-          className="grid sm:grid-cols-2 md:grid-cols-4 gap-6"
+          className="grid sm:grid-cols-2 md:grid-cols-4 gap-8"
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-120px' }}
         >
           {capabilities.map((cap, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
-              className="bg-slate-900/60 border border-emerald-500/20
-              rounded-2xl p-6 text-center transition-all
-              hover:border-emerald-400/50 hover:bg-slate-900/80"
+              whileHover={{ y: -6 }}
+              className="
+                rounded-2xl p-6 text-center
+                bg-white/5 backdrop-blur-xl
+                border border-white/10
+                transition-all duration-500
+                hover:border-emerald-400/40
+              "
             >
-              <cap.icon className="w-10 h-10 mx-auto mb-3 text-emerald-300" />
+              <cap.icon className="w-10 h-10 mx-auto mb-4 text-emerald-300" />
               <p className="text-slate-200 font-medium">
                 {cap.name}
               </p>

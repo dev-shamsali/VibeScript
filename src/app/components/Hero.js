@@ -12,9 +12,9 @@ export default function Hero() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       /* --------------------------------
-         HERO INTRO TIMELINE (CINEMATIC)
+         HERO INTRO (CINEMATIC)
       --------------------------------- */
-      const tl = gsap.timeline({ delay: 0.2 })
+      const tl = gsap.timeline({ delay: 0.25 })
 
       tl.from('.hero-title-line', {
         y: 120,
@@ -29,6 +29,7 @@ export default function Hero() {
             y: 60,
             opacity: 0,
             duration: 1,
+            ease: 'power3.out',
           },
           '-=0.5'
         )
@@ -54,7 +55,7 @@ export default function Hero() {
         )
 
       /* --------------------------------
-         FLOATING GLOWS (SUBTLE PARALLAX)
+         FLOATING GLOWS
       --------------------------------- */
       gsap.to(glowLeft.current, {
         y: 70,
@@ -84,17 +85,30 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="home"
-      className="relative min-h-screen flex items-center pt-28 overflow-hidden"
+      className="
+        relative min-h-screen flex items-center pt-28 overflow-hidden
+        bg-transparent
+      "
     >
-      {/* Accent Glows */}
+      {/* Ambient Glows (DO NOT block background) */}
       <div className="pointer-events-none absolute inset-0">
         <div
           ref={glowLeft}
-          className="absolute -top-32 -left-24 w-96 h-96 rounded-full bg-emerald-500/25 blur-[140px]"
+          className="
+            absolute -top-32 -left-24
+            w-96 h-96 rounded-full
+            bg-emerald-500/20
+            blur-[160px]
+          "
         />
         <div
           ref={glowRight}
-          className="absolute bottom-0 -right-32 w-[32rem] h-[32rem] rounded-full bg-green-400/20 blur-[160px]"
+          className="
+            absolute bottom-0 -right-32
+            w-[32rem] h-[32rem] rounded-full
+            bg-green-400/15
+            blur-[180px]
+          "
         />
       </div>
 
@@ -138,9 +152,10 @@ export default function Hero() {
                 onClick={() => scrollToSection('contact')}
                 className="
                   inline-flex items-center gap-2 px-9 py-4 rounded-full
-                  border border-emerald-500/40 bg-emerald-500/10
+                  border border-emerald-500/40
+                  bg-white/5 backdrop-blur-md
                   text-sm sm:text-base text-emerald-100
-                  hover:bg-emerald-500/20 hover:border-emerald-400
+                  hover:bg-white/10 hover:border-emerald-400
                   transition-all
                 "
               >
@@ -149,12 +164,26 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* RIGHT PANEL */}
+          {/* RIGHT PANEL (GLASS ONLY — NO SOLID BG) */}
           <div className="hero-panel relative">
-            <div className="absolute -inset-1 bg-gradient-to-tr from-emerald-400/30 via-transparent to-green-600/50 blur-2xl opacity-80" />
+            <div
+              className="
+                absolute -inset-1
+                bg-gradient-to-tr from-emerald-400/25 via-transparent to-green-600/40
+                blur-2xl opacity-70
+              "
+            />
 
-            <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-7 shadow-[0_30px_80px_rgba(0,0,0,0.8)]">
-
+            <div
+              className="
+                relative rounded-3xl
+                border border-white/10
+                bg-white/5
+                backdrop-blur-xl
+                p-7
+                shadow-[0_30px_80px_rgba(0,0,0,0.75)]
+              "
+            >
               <div className="flex items-center justify-between mb-7">
                 <div>
                   <p className="text-xs uppercase tracking-widest text-slate-400">
@@ -191,11 +220,17 @@ export default function Hero() {
 }
 
 /* --------------------------------
-   INFO CARD
+   INFO CARD (GLASS)
 --------------------------------- */
 function InfoCard({ icon, title, value }) {
   return (
-    <div className="rounded-2xl bg-slate-900/70 border border-emerald-500/20 p-4 space-y-2">
+    <div className="
+      rounded-2xl
+      bg-white/5
+      backdrop-blur-md
+      border border-emerald-500/20
+      p-4 space-y-2
+    ">
       <div className="text-emerald-300">{icon}</div>
       <p className="text-xs text-slate-400">{title}</p>
       <p className="text-sm font-medium text-slate-100">{value}</p>

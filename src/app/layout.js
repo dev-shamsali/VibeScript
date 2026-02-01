@@ -1,7 +1,7 @@
 import './globals.css'
 import { Sora, Plus_Jakarta_Sans } from 'next/font/google'
 
-/* -------------------------------
+/* --------------------------------
    Fonts
 -------------------------------- */
 
@@ -17,7 +17,7 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
 })
 
-/* -------------------------------
+/* --------------------------------
    Metadata
 -------------------------------- */
 
@@ -46,7 +46,7 @@ export const metadata = {
   },
 }
 
-/* -------------------------------
+/* --------------------------------
    Root Layout
 -------------------------------- */
 
@@ -54,16 +54,16 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${sora.variable} ${jakarta.variable} scroll-smooth`}
+      className={`${sora.variable} ${jakarta.variable}`}
     >
       <body>
-        {/* Global fixed background */}
-        <div id="global-bg" />
+        {/* Global fixed background (ONLY background source) */}
+        <div id="global-bg" aria-hidden="true" />
 
-        {/* App content */}
-        <div id="app-content">
+        {/* App content (everything scrolls above bg) */}
+        <main id="app-content">
           {children}
-        </div>
+        </main>
       </body>
     </html>
   )
