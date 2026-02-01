@@ -165,7 +165,7 @@ export default function Hero() {
           </div>
 
           {/* RIGHT PANEL (GLASS ONLY — NO SOLID BG) */}
-          <div className="hero-panel relative">
+          <div className="hero-panel relative mb-16">
             <div
               className="
                 absolute -inset-1
@@ -231,7 +231,7 @@ function InfoCard({ icon, title, value }) {
       border border-emerald-500/20
       p-4 space-y-2
     ">
-      <div className="text-emerald-300">{icon}</div>
+      <div className="text-emerald-300 ">{icon}</div>
       <p className="text-xs text-slate-400">{title}</p>
       <p className="text-sm font-medium text-slate-100">{value}</p>
     </div>

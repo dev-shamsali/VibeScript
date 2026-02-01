@@ -18,17 +18,29 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 /* -------------------------------
-   Metadata (SEO + FAVICON)
+   Metadata (SEO + Favicon)
 -------------------------------- */
 
 export const metadata = {
+  metadataBase: new URL('https://vibescript.cloud'),
+
   title: 'VibeScript – Digital Solutions Studio',
   description:
     'VibeScript builds modern, scalable digital solutions for startups and businesses.',
-  keywords:
-    'web development, next.js, react, full stack, devops, saas, website agency',
+
+  keywords: [
+    'web development',
+    'next.js',
+    'react',
+    'full stack',
+    'devops',
+    'saas',
+    'website agency',
+  ],
+
   authors: [{ name: 'VibeScript Team' }],
 
+  /* ✅ FAVICONS (from /public root) */
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -51,6 +63,7 @@ export const metadata = {
         url: '/logo.png',
         width: 1200,
         height: 630,
+        alt: 'VibeScript Digital Solutions',
       },
     ],
     locale: 'en_US',
@@ -64,10 +77,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${sora.variable} ${jakarta.variable}`}
-    >
+    <html lang="en" className={`${sora.variable} ${jakarta.variable}`}>
       <body>
         {/* Global fixed background */}
         <div id="global-bg" aria-hidden="true" />
